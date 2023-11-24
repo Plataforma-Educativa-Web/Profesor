@@ -8,5 +8,6 @@ import pe.cibertec.ProyectoFinal.Profesor.entity.Profesor;
 public interface ProfesorRepository extends JpaRepository<Profesor, Long>{
     
     Optional<Profesor> findByNombre(String nombre);
+    Optional<Profesor> findByCodigoP(Long codigoP);
     
 }

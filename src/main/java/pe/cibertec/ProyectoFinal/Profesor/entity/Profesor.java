@@ -15,6 +15,8 @@ public class Profesor {
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
     
     private Long id;
+    private Long codigo;
+    private Long codigoP;
     private String nombre;
     private String apellido;
     private String sexo;

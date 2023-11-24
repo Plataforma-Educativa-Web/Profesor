@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pe.cibertec.ProyectoFinal.Profesor.dto.ProfesorDTO;
+import pe.cibertec.ProyectoFinal.Profesor.entity.Curso;
 import pe.cibertec.ProyectoFinal.Profesor.entity.Profesor;
 import pe.cibertec.ProyectoFinal.Profesor.service.ProfesorService;
+import pe.cibertec.ProyectoFinal.Profesor.restClient.CursoRestClient;
 
-@RequestMapping("/api/v1/profesor")
+@RequestMapping("api/v1/profesor")
 @RestController
 
 public class ProfesorController {
@@ -24,6 +27,7 @@ public class ProfesorController {
 
     private ProfesorService profesorService;
 
+    
     @GetMapping("/findAll")
 
     public ResponseEntity<List<Profesor>> findAll() {
@@ -32,6 +36,8 @@ public class ProfesorController {
 
     }
 
+
+    
     @GetMapping("/buscarPorId/{id}")
 
     public ResponseEntity<Profesor> buscarPorId(@PathVariable Long id) {
@@ -39,7 +45,25 @@ public class ProfesorController {
         return new ResponseEntity<>(profesorService.buscarPorId(id), HttpStatus.OK);
 
     }
+    
+    @GetMapping("/findByCodigoP/{codigoP}")
+    
+    public ResponseEntity<Profesor> findByCodigoP(@PathVariable Long codigoP) {
+        
+        return new ResponseEntity<>(profesorService.findByCodigoP(codigoP), HttpStatus.OK);
+        
+    }
+    
 
+    @GetMapping("/findByCodigo/{codigo}")
+    
+    public ResponseEntity<ProfesorDTO> findByCodigo(@PathVariable Long codigo) {
+        
+        return new ResponseEntity<>(profesorService.findById(codigo),HttpStatus.OK);
+        
+    }
+    
+    
     @GetMapping("/findByNombre/{nombre}")
 
     public ResponseEntity<Profesor> findByNombre(@PathVariable String nombre) {
