@@ -1,6 +1,7 @@
 package pe.cibertec.ProyectoFinal.Profesor.serviceImpl;
 
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.cibertec.ProyectoFinal.Profesor.dao.ProfesorRepository;
@@ -12,6 +13,7 @@ import pe.cibertec.ProyectoFinal.Profesor.service.ProfesorService;
 import pe.cibertec.ProyectoFinal.Profesor.restClient.CursoRestClient;
 
 @Service
+@Slf4j
 
 public class ProfesorServiceImpl implements ProfesorService {
 
@@ -25,19 +27,22 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public List<Profesor> findAll() {
+        log.info("Buscando todos los profesores");
 
         return (List<Profesor>) profesorRepository.findAll();
 
     }
 
     public List<Curso> findAllCurso() {
-        
+        log.info("Buscando todos los cursos");
+
         return (List<Curso>) apiRestClient.findAllCurso();
-        
+
     }
-    
+
     @Override
     public Profesor buscarPorId(Long id) {
+        log.info("Buscando profesor por ID: {}", id);
 
         return profesorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Profesor no encontrado con el id" + id.toString()));
 
@@ -45,11 +50,14 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public Profesor findByNombre(String nombre) {
+        log.info("Buscando profesor por nombre: {}", nombre);
+
         return profesorRepository.findByNombre(nombre).orElseThrow(() -> new EntityNotFoundException("Profesor no encontrado con el nombre" + nombre.toString()));
     }
 
     @Override
     public Profesor agregarProfesor(Profesor profesor) {
+        log.info("Agregando nuevo profesor: {}", profesor);
 
         return profesorRepository.save(profesor);
 
@@ -57,6 +65,7 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public Profesor actualizarProfesor(Profesor profesor) {
+        log.info("Actualizando profesor con ID {}: {}", profesor.getId(), profesor);
 
         var ProfesorF = profesorRepository.findById(profesor.getId()).get();
         ProfesorF.setCodigoP(profesor.getCodigoP());
@@ -74,6 +83,7 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public void eliminarProfesor(Long id) {
+        log.info("Eliminando profesor con ID: {}", id);
 
         var ProfesorF = profesorRepository.findById(id).get();
 
@@ -83,6 +93,7 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public ProfesorDTO findById(Long id) {
+        log.info("Buscando profesor y curso por ID: {}", id);
 
         Profesor profesor = profesorRepository.findById(id).get();
 
@@ -106,9 +117,10 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public Profesor findByCodigoP(Long codigoP) {
-        
-        return profesorRepository.findByCodigoP(codigoP).orElseThrow(() -> new EntityNotFoundException("Profesor no encontrado con el codigo"+codigoP.toString()));
-        
+        log.info("Buscando profesor por código: {}", codigoP);
+
+        return profesorRepository.findByCodigoP(codigoP).orElseThrow(() -> new EntityNotFoundException("Profesor no encontrado con el codigo" + codigoP.toString()));
+
     }
 
 }
